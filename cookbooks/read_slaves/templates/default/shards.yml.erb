@@ -1,0 +1,16 @@
+octopus:
+  replicated: true
+  fully_replicated: true
+  environments:
+    - <%= @environment %>
+  <%= @environment %>:
+    read_slaves:
+<% @slaves.each_with_index do |slave,i| %>
+      <%= @slaves.size == 1 ? "slave" : "slave#{i}" %>:
+        adapter:   <%= @dbtype %>
+        database:  <%= @dbname %>
+        username:  <%= @dbuser %>
+        password:  <%= @dbpass %>
+        host:      <%= slave %>
+        reconnect: true
+<% end %>
